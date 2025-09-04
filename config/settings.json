@@ -1,6 +1,0 @@
-{
-    "output_dir": "C:/Users/Oronami/Downloads",
-    "ffmpeg_path": "",
-    "enabled_plugins": [],
-    "yt_dlp_opts": "{\"default_format\": \"bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]\", \"output_dir\": \"C:/Users/Oronami/Downloads\"}"
-}
