@@ -1,5 +1,4 @@
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QTabWidget, QPushButton
-
 from .dialog_options.basic_options_widget import BasicOptionsWidget
 from .dialog_options.advanced_options_widget import AdvancedOptionsWidget
 from .dialog_options.downloader_options_widget import DownloaderOptionsWidget
@@ -7,18 +6,21 @@ from .dialog_options.developer_options_widget import DeveloperOptionsWidget
 
 class SettingsDialog(QDialog):
     def __init__(self, parent=None, current_output="downloads", plugin_manager=None,
-                 current_ffmpeg_path="", current_yt_dlp_opts=None):
+                 current_ffmpeg_path="", current_yt_dlp_opts=None, i18n=None):
         super().__init__(parent)
-        self.setWindowTitle('設定')
+        self.i18n = i18n or parent.i18n if hasattr(parent, 'i18n') else None
         self.plugin_manager = plugin_manager
         self.current_yt_dlp_opts = current_yt_dlp_opts or {}
-
         self.output_dir = current_output
         self.ffmpeg_path = current_ffmpeg_path
-
         self.init_ui()
 
     def init_ui(self):
+        if self.i18n:
+            self.setWindowTitle(self.i18n.t('settings_dialog_title'))
+        else:
+            self.setWindowTitle('設定')
+
         main_layout = QVBoxLayout()
         self.tab_widget = QTabWidget(self)
 
@@ -31,22 +33,32 @@ class SettingsDialog(QDialog):
             force_ipv6=self.current_yt_dlp_opts.get('force_ipv6', False),
             socket_timeout=self.current_yt_dlp_opts.get('socket_timeout', None),
             default_format=self.current_yt_dlp_opts.get('default_format', ''),
-            plugin_formats=plugin_formats
+            plugin_formats=plugin_formats,
+            i18n=self.i18n
         )
 
-        self.advanced_tab = AdvancedOptionsWidget(parent=self, opts=self.current_yt_dlp_opts)
+        self.advanced_tab = AdvancedOptionsWidget(parent=self, opts=self.current_yt_dlp_opts, i18n=self.i18n)
         self.downloader_tab = DownloaderOptionsWidget(parent=self,
-                                                      current_downloader=self.current_yt_dlp_opts.get('downloader', ''))
-        self.developer_tab = DeveloperOptionsWidget(parent=self)
+                                                    current_downloader=self.current_yt_dlp_opts.get('downloader', ''),
+                                                    i18n=self.i18n)
+        self.developer_tab = DeveloperOptionsWidget(parent=self, i18n=self.i18n)
 
-        self.tab_widget.addTab(self.basic_tab, "基本オプション")
-        self.tab_widget.addTab(self.advanced_tab, "詳細オプション")
-        self.tab_widget.addTab(self.downloader_tab, "ダウンローダー")
-        self.tab_widget.addTab(self.developer_tab, "開発者向け")
+        if self.i18n:
+            self.tab_widget.addTab(self.basic_tab, self.i18n.t("tab_basic_options"))
+            self.tab_widget.addTab(self.advanced_tab, self.i18n.t("tab_advanced_options"))
+            self.tab_widget.addTab(self.downloader_tab, self.i18n.t("tab_downloader"))
+            self.tab_widget.addTab(self.developer_tab, self.i18n.t("tab_developer"))
+            save_btn_text = self.i18n.t("settings_save")
+        else:
+            self.tab_widget.addTab(self.basic_tab, "基本オプション")
+            self.tab_widget.addTab(self.advanced_tab, "詳細オプション")
+            self.tab_widget.addTab(self.downloader_tab, "ダウンローダー")
+            self.tab_widget.addTab(self.developer_tab, "開発者向け")
+            save_btn_text = "保存"
 
         main_layout.addWidget(self.tab_widget)
 
-        save_btn = QPushButton("保存", self)
+        save_btn = QPushButton(save_btn_text, self)
         save_btn.clicked.connect(self.accept)
         main_layout.addWidget(save_btn)
 
@@ -58,7 +70,6 @@ class SettingsDialog(QDialog):
         opts.update(self.advanced_tab.get_options())
         opts.update(self.downloader_tab.get_options())
         opts.update(self.developer_tab.get_options())
-        # 空値・Falseの除去などは必要に応じて処理
         return {k: v for k, v in opts.items() if v not in (None, '', False) or (isinstance(v, bool) and v)}
 
     def get_output_dir(self):
