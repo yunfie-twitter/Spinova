@@ -45,6 +45,40 @@
     "downloading_unknown": "ダウンロード中...",
     "downloading_bytes_only": "ダウンロード中: {downloaded} bytes",
     "bytes_display_enable": "Bytes表示を有効にする",
-    "language_restart_required": "言語変更を反映するには再起動が必要です。"
+    "language_restart_required": "言語変更を反映するには再起動が必要です。",
+    
+    "settings_dialog_title": "設定",
+    "settings_save": "保存",
+    "settings_browse": "参照",
+    "tab_basic_options": "基本オプション",
+    "tab_advanced_options": "詳細オプション",
+    "tab_downloader": "ダウンローダー",
+    "tab_developer": "開発者向け",
+    
+    "basic_proxy": "プロキシ (--proxy):",
+    "basic_force_ipv4": "IPv4強制 (--force-ipv4)",
+    "basic_force_ipv6": "IPv6強制 (--force-ipv6)",
+    "basic_socket_timeout": "ソケットタイムアウト (--socket-timeout):",
+    "basic_default_format": "デフォルトフォーマット:",
+    "basic_output_directory": "規定ダウンロード場所:",
+    "basic_custom_format": "カスタム",
+    "basic_custom_placeholder": "カスタムフォーマットを入力",
+    
+    "advanced_concurrent_fragments": "並列フラグメント数 (-N):",
+    "advanced_skip_unavailable": "スキップ可能フラグメント (--skip-unavailable-fragments)",
+    "advanced_abort_on_unavailable": "フラグメント不可時中止 (--abort-on-unavailable-fragments)",
+    "advanced_rate_limit": "レート制限 (-r, --limit-rate):",
+    "advanced_retries": "リトライ回数 (-R, --retries):",
+    "advanced_file_access_retries": "ファイルアクセスリトライ (--file-access-retries):",
+    "advanced_fragment_retries": "フラグメントリトライ (--fragment-retries):",
+    "advanced_retry_sleep": "リトライスリープ (--retry-sleep):",
+    "advanced_buffer_size": "バッファサイズ (--buffer-size):",
+    "advanced_resize_buffer": "バッファサイズ自動調整 (--resize-buffer)",
+    "advanced_no_resize_buffer": "バッファ自動調整禁止 (--no-resize-buffer)",
+    "advanced_http_chunk_size": "HTTPチャンクサイズ (--http-chunk-size):",
+    
+    "downloader_label": "ダウンローダー (--downloader):",
+    
+    "developer_warning": "開発者向けオプション（慎重に使用してください）"
   }
 }
