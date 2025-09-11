@@ -45,6 +45,40 @@
     "downloading_unknown": "Downloading...",
     "downloading_bytes_only": "Downloading: {downloaded} bytes",
     "bytes_display_enable": "Enable Bytes Display",
-    "language_restart_required": "Application restart is required to apply language change."
+    "language_restart_required": "Application restart is required to apply language change.",
+    
+    "settings_dialog_title": "Settings",
+    "settings_save": "Save",
+    "settings_browse": "Browse",
+    "tab_basic_options": "Basic Options",
+    "tab_advanced_options": "Advanced Options",
+    "tab_downloader": "Downloader",
+    "tab_developer": "Developer",
+    
+    "basic_proxy": "Proxy (--proxy):",
+    "basic_force_ipv4": "Force IPv4 (--force-ipv4)",
+    "basic_force_ipv6": "Force IPv6 (--force-ipv6)",
+    "basic_socket_timeout": "Socket Timeout (--socket-timeout):",
+    "basic_default_format": "Default Format:",
+    "basic_output_directory": "Default Download Directory:",
+    "basic_custom_format": "Custom",
+    "basic_custom_placeholder": "Enter custom format",
+    
+    "advanced_concurrent_fragments": "Concurrent Fragments (-N):",
+    "advanced_skip_unavailable": "Skip Unavailable Fragments (--skip-unavailable-fragments)",
+    "advanced_abort_on_unavailable": "Abort on Unavailable Fragments (--abort-on-unavailable-fragments)",
+    "advanced_rate_limit": "Rate Limit (-r, --limit-rate):",
+    "advanced_retries": "Retries (-R, --retries):",
+    "advanced_file_access_retries": "File Access Retries (--file-access-retries):",
+    "advanced_fragment_retries": "Fragment Retries (--fragment-retries):",
+    "advanced_retry_sleep": "Retry Sleep (--retry-sleep):",
+    "advanced_buffer_size": "Buffer Size (--buffer-size):",
+    "advanced_resize_buffer": "Resize Buffer (--resize-buffer)",
+    "advanced_no_resize_buffer": "No Resize Buffer (--no-resize-buffer)",
+    "advanced_http_chunk_size": "HTTP Chunk Size (--http-chunk-size):",
+    
+    "downloader_label": "Downloader (--downloader):",
+    
+    "developer_warning": "Developer Options (Use with caution)"
   }
 }
