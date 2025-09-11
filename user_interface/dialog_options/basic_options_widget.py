@@ -1,7 +1,8 @@
 from PyQt5.QtWidgets import (
     QWidget, QFormLayout, QLineEdit, QCheckBox, QComboBox,
-    QPushButton, QHBoxLayout, QFileDialog
+    QPushButton, QHBoxLayout, QFileDialog, QLabel
 )
+from PyQt5.QtCore import Qt
 
 class BasicOptionsWidget(QWidget):
     def __init__(self, parent=None, proxy="", force_ipv4=False, force_ipv6=False,
@@ -45,6 +46,39 @@ class BasicOptionsWidget(QWidget):
         timeout_label = self.i18n.t("basic_socket_timeout") if self.i18n else "ソケットタイムアウト (--socket-timeout):"
         layout.addRow(timeout_label, self.socket_timeout_edit)
 
+        # 画質選択（動画ビットレート）
+        quality_label = QLabel(self.i18n.t("video_quality") if self.i18n else "画質 (動画ビットレート):")
+        self.quality_combo = QComboBox(self)
+        # 例の画質プリセット、必要に応じ調整可
+        qualities = [
+            ("最高品質 (無制限)", "best"),
+            ("1080p 以上", "bestaudio+bestvideo[height>=1080]"),
+            ("720p 以上", "bestaudio+bestvideo[height>=720]"),
+            ("480p 以上", "bestaudio+bestvideo[height>=480]"),
+            ("360p 以上", "bestaudio+bestvideo[height>=360]"),
+            ("音声のみ", "bestaudio/best"),
+        ]
+        for text, fmt in qualities:
+            self.quality_combo.addItem(text, fmt)
+        self.quality_combo.setCurrentIndex(0)
+        layout.addRow(quality_label, self.quality_combo)
+
+        # 音声ビットレート指定
+        audio_bitrate_label = QLabel(self.i18n.t("audio_bitrate") if self.i18n else "音声ビットレート (kbps):")
+        self.audio_bitrate_combo = QComboBox(self)
+        audio_bitrates = [
+            ("最高 (無指定)", ""),
+            ("320 kbps", "320"),
+            ("256 kbps", "256"),
+            ("192 kbps", "192"),
+            ("128 kbps", "128"),
+            ("64 kbps", "64"),
+        ]
+        for text, val in audio_bitrates:
+            self.audio_bitrate_combo.addItem(text, val)
+        self.audio_bitrate_combo.setCurrentIndex(0)
+        layout.addRow(audio_bitrate_label, self.audio_bitrate_combo)
+
         # デフォルトフォーマット
         self.format_combo = QComboBox(self)
         if self.i18n:
@@ -75,6 +109,7 @@ class BasicOptionsWidget(QWidget):
         layout.addRow("", self.custom_format_edit)
 
         self.format_combo.currentIndexChanged.connect(self.on_format_changed)
+        self.custom_format_edit.textChanged.connect(self.on_custom_format_changed)
 
         # 出力ディレクトリ
         outdir_layout = QHBoxLayout()
@@ -108,6 +143,14 @@ class BasicOptionsWidget(QWidget):
     def on_format_changed(self, index):
         fmt = self.format_combo.itemData(index)
         self.custom_format_edit.setVisible(fmt == "custom")
+        # 画質・音声ビットレートと連動させる例（カスタム以外は設定）
+        if fmt != "custom":
+            # フォーマット直接選択時はカスタム入力非活性か空白にするなど工夫可
+            pass
+
+    def on_custom_format_changed(self, text):
+        # カスタム入力時に画質・音声ビットレートを解除するなどのロジックを入れても良い
+        pass
 
     def set_default_format_selection(self):
         target_fmt = self.default_format.strip().lower()
@@ -138,6 +181,8 @@ class BasicOptionsWidget(QWidget):
         self.output_dir_edit.setText(self.output_dir)
         self.set_default_format_selection()
 
+        # 画質と音声ビットレートはoptsまたはフォーマット文字列解析が必要ならここで処理
+
     def get_options(self):
         try:
             timeout = float(self.socket_timeout_edit.text())
@@ -151,11 +196,16 @@ class BasicOptionsWidget(QWidget):
         else:
             default_fmt = fmt_data
 
+        # 画質、音声ビットレートの選択値からフォーマット文字列を組み立てる
+        # ここでは単純にdefault_fmtのみ返しています
+
         return {
             "proxy": self.proxy_edit.text().strip(),
             "force_ipv4": self.force_ipv4_cb.isChecked(),
             "force_ipv6": self.force_ipv6_cb.isChecked(),
             "socket_timeout": timeout,
             "default_format": default_fmt,
-            "output_dir": self.output_dir_edit.text().strip()
+            "output_dir": self.output_dir_edit.text().strip(),
+            # 必要に応じ "video_quality": self.quality_combo.currentData(),
+            # "audio_bitrate": self.audio_bitrate_combo.currentData()
         }
