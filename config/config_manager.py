@@ -20,6 +20,9 @@ class ConfigManager:
                     self.config.update(loaded)
             except Exception as e:
                 print(f"設定ファイルの読み込みに失敗しました: {e}")
+        else:
+            # ファイルがなければ初期設定で自動生成
+            self.save()
 
     def save(self):
         os.makedirs(os.path.dirname(self.config_path), exist_ok=True)
