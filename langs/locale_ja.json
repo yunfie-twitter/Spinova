@@ -80,7 +80,10 @@
     "downloader_label": "ダウンローダー (--downloader):",
     "action_toggle_log": "ログの表示",
     "action_clear_log": "ログをクリア",
-    
+    "msg_log_force_disabled": "ログ表示が完全に無効化されました",
+    "msg_log_force_enabled": "ログ表示が有効化されました",
+    "msg_log_disabled": "ログ表示が無効化されました",
+    "msg_log_enabled": "ログ表示が有効化されました",
     "developer_warning": "開発者向けオプション（慎重に使用してください）"
   }
 }
