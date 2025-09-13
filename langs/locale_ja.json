@@ -78,6 +78,8 @@
     "advanced_http_chunk_size": "HTTPチャンクサイズ (--http-chunk-size):",
     
     "downloader_label": "ダウンローダー (--downloader):",
+    "action_toggle_log": "ログの表示",
+    "action_clear_log": "ログをクリア",
     
     "developer_warning": "開発者向けオプション（慎重に使用してください）"
   }
